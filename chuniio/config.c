@@ -56,7 +56,7 @@ void chuni_io_config_load(
                 filename);
     }
 
-    GetPrivateProfileStringW(L"io3", L"ledport", L"COM2", port_input, 6, filename);
+    GetPrivateProfileStringW(L"slider", L"ledport", L"COM2", port_input, 6, filename);
     wcsncpy(cfg->led_com, L"\\\\.\\", 4);
     wcsncat_s(cfg->led_com, 11, port_input, 6);
 }
