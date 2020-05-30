@@ -3,9 +3,12 @@
 #include <process.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "chuniio/chuniio.h"
 #include "chuniio/config.h"
+
+#include "util/dprintf.h"
 
 static unsigned int __stdcall chuni_io_slider_thread_proc(void *ctx);
 
@@ -15,6 +18,7 @@ static uint8_t chuni_io_hand_pos;
 static HANDLE chuni_io_slider_thread;
 static bool chuni_io_slider_stop_flag;
 static struct chuni_io_config chuni_io_cfg;
+static HANDLE chuni_io_slider_led_port;
 
 uint16_t chuni_io_get_api_version(void)
 {
@@ -94,6 +98,8 @@ HRESULT chuni_io_slider_init(void)
 
 void chuni_io_slider_start(chuni_io_slider_callback_t callback)
 {
+    BOOL status;
+
     if (chuni_io_slider_thread != NULL) {
         return;
     }
@@ -105,6 +111,39 @@ void chuni_io_slider_start(chuni_io_slider_callback_t callback)
             callback,
             0,
             NULL);
+
+    chuni_io_slider_led_port = CreateFileW(chuni_io_cfg.led_com,
+            GENERIC_READ | GENERIC_WRITE,
+            0,
+            NULL,
+            OPEN_EXISTING,
+            0,
+            NULL);
+    
+    if (chuni_io_slider_led_port == INVALID_HANDLE_VALUE)
+        dprintf("Chunithm LEDs: Failed to open COM port (Attempted on %S)\n", chuni_io_cfg.led_com);
+    else
+        dprintf("Chunithm LEDs: COM Port Success!\n");
+            
+    DCB dcb_serial_params = { 0 };
+    dcb_serial_params.DCBlength = sizeof(dcb_serial_params);
+    status = GetCommState(chuni_io_slider_led_port, &dcb_serial_params);
+    
+    dcb_serial_params.BaudRate = CBR_115200;  // Setting BaudRate = 115200
+    dcb_serial_params.ByteSize = 8;         // Setting ByteSize = 8
+    dcb_serial_params.StopBits = ONESTOPBIT;// Setting StopBits = 1
+    dcb_serial_params.Parity   = NOPARITY;  // Setting Parity = None
+    SetCommState(chuni_io_slider_led_port, &dcb_serial_params);
+    
+    COMMTIMEOUTS timeouts = { 0 };
+    timeouts.ReadIntervalTimeout         = 50; // in milliseconds
+    timeouts.ReadTotalTimeoutConstant    = 50; // in milliseconds
+    timeouts.ReadTotalTimeoutMultiplier  = 10; // in milliseconds
+    timeouts.WriteTotalTimeoutConstant   = 50; // in milliseconds
+    timeouts.WriteTotalTimeoutMultiplier = 10; // in milliseconds
+    
+    SetCommTimeouts(chuni_io_slider_led_port, &timeouts);
+
 }
 
 void chuni_io_slider_stop(void)
@@ -119,10 +158,34 @@ void chuni_io_slider_stop(void)
     CloseHandle(chuni_io_slider_thread);
     chuni_io_slider_thread = NULL;
     chuni_io_slider_stop_flag = false;
+
+    dprintf("Chunithm LEDs: Closing COM port\n");
+    CloseHandle(chuni_io_slider_led_port);
 }
 
 void chuni_io_slider_set_leds(const uint8_t *rgb)
 {
+    if (chuni_io_slider_led_port != INVALID_HANDLE_VALUE)
+    {
+        char led_buffer[100];
+        DWORD bytes_to_write;         // No of bytes to write into the port
+        DWORD bytes_written = 0;     // No of bytes written to the port
+        bytes_to_write = sizeof(led_buffer);
+        BOOL status;
+        
+        led_buffer[0] = 0xAA;
+        led_buffer[1] = 0xAA;
+        memcpy(led_buffer+2, rgb, sizeof(uint8_t) * 96);
+        led_buffer[98] = 0xDD;
+        led_buffer[99] = 0xDD;
+        
+        status = WriteFile(chuni_io_slider_led_port,        // Handle to the Serial port
+                           led_buffer,     // Data to be written to the port
+                           bytes_to_write,  //No of bytes to write
+                           &bytes_written, //Bytes written
+                           NULL);
+    }
+
 }
 
 static unsigned int __stdcall chuni_io_slider_thread_proc(void *ctx)

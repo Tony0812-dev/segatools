@@ -132,10 +132,9 @@ void chuni_io_slider_start(chuni_io_slider_callback_t callback);
 void chuni_io_slider_stop(void);
 
 /* Update the RGB lighting on the slider. A pointer to an array of 32 * 3 = 96
-   bytes is supplied. The illuminated areas on the touch slider are some
-   combination of rectangular regions and dividing lines between these regions
-   but the exact mapping of this lighting control buffer is still TBD.
-
-   Minimum API version: 0x0100 */
+   bytes is supplied, organized in BRG format.
+   The first set of bytes is the right-most slider key, and from there the bytes
+   alternate between the dividers and the keys until the left-most key. 
+   There are 31 illuminated sections in total. */
 
 void chuni_io_slider_set_leds(const uint8_t *rgb);

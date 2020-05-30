@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "chuniio/config.h"
 
@@ -27,6 +28,7 @@ void chuni_io_config_load(
 {
     wchar_t key[16];
     int i;
+    wchar_t port_input[6];
 
     assert(cfg != NULL);
     assert(filename != NULL);
@@ -53,4 +55,8 @@ void chuni_io_config_load(
                 chuni_io_default_cells[i],
                 filename);
     }
+
+    GetPrivateProfileStringW(L"io3", L"comport", L"COM2", port_input, 6, filename);
+    wcsncpy(cfg->led_com, L"\\\\.\\", 4);
+    wcsncat_s(cfg->led_com, 11, port_input, 6);
 }
