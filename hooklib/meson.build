@@ -27,5 +27,7 @@ hooklib_lib = static_library(
         'setupapi.h',
         'spike.c',
         'spike.h',
+        'touch.c',
+        'touch.h',
     ],
 )
