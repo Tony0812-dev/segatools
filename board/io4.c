@@ -227,6 +227,10 @@ static HRESULT io4_handle_write(struct irp *irp)
 
         return E_FAIL;
 
+    case 0x41:
+        // This command is used by FGO and maimai for some purpose that I don't know.
+        return S_OK;
+
     default:
         dprintf("USB I/O: Unknown command %02x\n", out.cmd);
 
