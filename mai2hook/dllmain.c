@@ -35,7 +35,7 @@ static DWORD CALLBACK mai2_pre_startup(void)
 
     /* Hook Win32 APIs */
 
-    dvd_hook_init(&mu3_hook_cfg.dvd, mai2_hook_mod);
+    dvd_hook_init(&mai2_hook_cfg.dvd, mai2_hook_mod);
     gfx_hook_init(&mai2_hook_cfg.gfx, mai2_hook_mod);
     serial_hook_init();
 
