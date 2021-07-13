@@ -1,0 +1,33 @@
+shared_library(
+    'carolhook',
+    name_prefix : '',
+    include_directories : inc,
+    implicit_include_directories : false,
+    vs_module_defs : 'carolhook.def',
+    c_pch : '../precompiled.h',
+    dependencies : [
+        capnhook.get_variable('hook_dep'),
+        capnhook.get_variable('hooklib_dep'),
+    ],
+    link_with : [
+        aimeio_lib,
+        amex_lib,
+        board_lib,
+        carolio_lib,
+        hooklib_lib,
+        jvs_lib,
+        platform_lib,
+        util_lib,
+    ],
+    sources : [
+        'carol-dll.c',
+        'carol-dll.h',
+        'config.c',
+        'config.h',
+        'dllmain.c',
+        'jvs.c',
+        'jvs.h',
+        'controlbd.c',
+        'controlbd.h',
+    ],
+)
