@@ -48,6 +48,7 @@ subdir('chuniio')
 subdir('divaio')
 subdir('idzio')
 subdir('mu3io')
+subdir('mai2io')
 subdir('fgoio')
 subdir('carolio')
 

@@ -11,6 +11,7 @@
 
 #include "mai2hook/config.h"
 #include "mai2hook/io4.h"
+#include "mai2hook/mai2-dll.h"
 #include "mai2hook/unity.h"
 
 #include "platform/platform.h"
@@ -58,6 +59,12 @@ static DWORD CALLBACK mai2_pre_startup(void)
     }
 
     hr = vfd_hook_init(2);
+
+    if (FAILED(hr)) {
+        goto fail;
+    }
+
+    hr = mai2_dll_init(&mai2_hook_cfg.dll, mai2_hook_mod);
 
     if (FAILED(hr)) {
         goto fail;

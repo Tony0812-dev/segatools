@@ -12,3 +12,8 @@ EXPORTS
     amDllVideoGetVBiosVersion @4
     amDllVideoOpen @1
     amDllVideoSetResolution @3
+    mai2_io_get_api_version
+    mai2_io_get_gamebtns
+    mai2_io_get_opbtns
+    mai2_io_init
+    mai2_io_poll
