@@ -69,7 +69,7 @@ static DWORD CALLBACK fgo_pre_startup(void)
         goto fail;
     }
 
-    hr = fgo_io4_hook_init();
+    hr = fgo_io4_hook_init(&fgo_hook_cfg.io4);
 
     if (FAILED(hr)) {
         goto fail;

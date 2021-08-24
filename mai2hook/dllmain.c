@@ -70,7 +70,7 @@ static DWORD CALLBACK mai2_pre_startup(void)
         goto fail;
     }
 
-    hr = mai2_io4_hook_init();
+    hr = mai2_io4_hook_init(&mai2_hook_cfg.io4);
 
     if (FAILED(hr)) {
         goto fail;

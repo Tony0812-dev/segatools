@@ -16,13 +16,13 @@ static const struct io4_ops mai2_io4_ops = {
     .poll = mai2_io4_poll,
 };
 
-HRESULT mai2_io4_hook_init(void)
+HRESULT mai2_io4_hook_init(const struct io4_config *cfg)
 {
     HRESULT hr;
 
     assert(mai2_dll.init != NULL);
 
-    hr = io4_hook_init(&mai2_io4_ops, NULL);
+    hr = io4_hook_init(cfg, &mai2_io4_ops, NULL);
 
     if (FAILED(hr)) {
         return hr;

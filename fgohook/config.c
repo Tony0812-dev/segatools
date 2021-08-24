@@ -38,6 +38,7 @@ void fgo_hook_config_load(
     platform_config_load(&cfg->platform, filename);
     aime_config_load(&cfg->aime, filename);
     dvd_config_load(&cfg->dvd, filename);
+    io4_config_load(&cfg->io4, filename);
     touch_config_load(&cfg->touch, filename);
     fgo_dll_config_load(&cfg->dll, filename);
 }

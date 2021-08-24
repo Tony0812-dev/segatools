@@ -19,13 +19,13 @@ static const struct io4_ops fgo_io4_ops = {
     .poll = fgo_io4_poll,
 };
 
-HRESULT fgo_io4_hook_init(void)
+HRESULT fgo_io4_hook_init(const struct io4_config *cfg)
 {
     HRESULT hr;
 
     assert(fgo_dll.init != NULL);
 
-    hr = io4_hook_init(&fgo_io4_ops, NULL);
+    hr = io4_hook_init(cfg, &fgo_io4_ops, NULL);
 
     if (FAILED(hr)) {
         return hr;
