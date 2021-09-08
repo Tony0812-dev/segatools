@@ -28,6 +28,21 @@ $(BUILD_DIR_ZIP)/idz.zip:
 	$(V)strip $(BUILD_DIR_ZIP)/idz/*.{exe,dll}
 	$(V)cd $(BUILD_DIR_ZIP)/idz ; zip -r ../idz.zip *
 
+$(BUILD_DIR_ZIP)/mai2.zip:
+	$(V)echo ... $@
+	$(V)mkdir -p $(BUILD_DIR_ZIP)/mai2
+	$(V)mkdir -p $(BUILD_DIR_ZIP)/mai2/DEVICE
+	$(V)cp $(BUILD_DIR_32)/subprojects/capnhook/inject/inject.exe \
+		$(BUILD_DIR_32)/mai2hook/mai2hook.dll \
+		$(DIST_DIR)/mai2/segatools.ini \
+		$(DIST_DIR)/mai2/start.bat \
+		$(BUILD_DIR_ZIP)/mai2
+	$(V)cp pki/billing.pub \
+		pki/ca.crt \
+    	$(BUILD_DIR_ZIP)/mai2/DEVICE
+	$(V)strip $(BUILD_DIR_ZIP)/mai2/*.{exe,dll}
+	$(V)cd $(BUILD_DIR_ZIP)/mai2 ; zip -r ../mai2.zip *
+
 $(BUILD_DIR_ZIP)/doc.zip: \
 		$(DOC_DIR)/config \
 		$(DOC_DIR)/chunihook.md \
@@ -40,6 +55,7 @@ $(BUILD_DIR_ZIP)/segatools.zip: \
 		$(BUILD_DIR_ZIP)/chuni.zip \
 		$(BUILD_DIR_ZIP)/doc.zip \
 		$(BUILD_DIR_ZIP)/idz.zip \
+        $(BUILD_DIR_ZIP)/mai2.zip \
 		CHANGELOG.md \
 		README.md \
 
