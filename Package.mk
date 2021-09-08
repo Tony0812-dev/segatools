@@ -32,8 +32,8 @@ $(BUILD_DIR_ZIP)/mai2.zip:
 	$(V)echo ... $@
 	$(V)mkdir -p $(BUILD_DIR_ZIP)/mai2
 	$(V)mkdir -p $(BUILD_DIR_ZIP)/mai2/DEVICE
-	$(V)cp $(BUILD_DIR_32)/subprojects/capnhook/inject/inject.exe \
-		$(BUILD_DIR_32)/mai2hook/mai2hook.dll \
+	$(V)cp $(BUILD_DIR_64)/subprojects/capnhook/inject/inject.exe \
+		$(BUILD_DIR_64)/mai2hook/mai2hook.dll \
 		$(DIST_DIR)/mai2/segatools.ini \
 		$(DIST_DIR)/mai2/start.bat \
 		$(BUILD_DIR_ZIP)/mai2
