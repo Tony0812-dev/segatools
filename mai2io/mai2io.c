@@ -29,11 +29,11 @@ HRESULT mai2_io_poll(void)
     mai2_player1_btn = 0;
     mai2_player2_btn = 0;
 
-    if (GetAsyncKeyState('1') & 0x8000) {
+    if (GetAsyncKeyState(mai2_io_cfg.vk_test)) {
         mai2_opbtn |= MAI2_IO_OPBTN_TEST;
     }
 
-    if (GetAsyncKeyState('2') & 0x8000) {
+    if (GetAsyncKeyState(mai2_io_cfg.vk_service)) {
         mai2_opbtn |= MAI2_IO_OPBTN_SERVICE;
     }
 
