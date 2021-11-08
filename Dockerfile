@@ -20,6 +20,7 @@ COPY board board
 COPY carolhook carolhook
 COPY carolio carolio
 COPY chunihook chunihook
+COPY chusanhook chusanhook
 COPY chuniio chuniio
 COPY dist dist
 COPY divahook divahook

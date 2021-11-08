@@ -53,6 +53,7 @@ subdir('fgoio')
 subdir('carolio')
 
 subdir('chunihook')
+subdir('chusanhook')
 subdir('divahook')
 subdir('idzhook')
 subdir('minihook')
