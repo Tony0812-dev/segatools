@@ -35,7 +35,6 @@ static wchar_t vfs_nthome_real[MAX_PATH];
 static const wchar_t vfs_nthome[] = L"C:\\Documents and Settings\\AppUser";
 static const size_t vfs_nthome_len = _countof(vfs_nthome) - 1;
 
-static wchar_t vfs_nthome_modern_real[MAX_PATH];
 static const wchar_t vfs_nthome_modern[] = L"C:\\Users\\AppUser";
 static const size_t vfs_nthome_modern_len = _countof(vfs_nthome_modern) - 1;
 
@@ -61,7 +60,6 @@ HRESULT vfs_hook_init(const struct vfs_config *config)
     wchar_t temp[MAX_PATH];
     size_t nthome_len;
     DWORD home_ok;
-    DWORD home_ok_modern;
     HRESULT hr;
 
     assert(config != NULL);
@@ -99,23 +97,9 @@ HRESULT vfs_hook_init(const struct vfs_config *config)
         return hr;
     }
 
-    home_ok_modern = GetEnvironmentVariableW(
-            L"USERPROFILE",
-            vfs_nthome_modern_real,
-            _countof(vfs_nthome_modern_real));
-
-    if (!home_ok_modern) {
-        hr = HRESULT_FROM_WIN32(GetLastError());
-        dprintf("Vfs: Failed to query %%USERPROFILE%% env var: %x\n",
-                (int) hr);
-
-        return hr;
-    }
-
     memcpy(&vfs_config, config, sizeof(*config));
 
     vfs_fixup_path(vfs_nthome_real, _countof(vfs_nthome_real));
-    vfs_fixup_path(vfs_nthome_modern_real, _countof(vfs_nthome_modern_real));
     vfs_fixup_path(vfs_config.amfs, _countof(vfs_config.amfs));
     vfs_fixup_path(vfs_config.appdata, _countof(vfs_config.appdata));
 
@@ -414,7 +398,7 @@ static HRESULT vfs_path_hook_nthome_modern(
     /* Cut off the matched <prefix>\, add the replaced prefix, count NUL */
 
     shift = path_is_separator_w(src[vfs_nthome_modern_len]) ? 1 : 0;
-    redir_len = wcslen(vfs_nthome_modern_real);
+    redir_len = wcslen(vfs_nthome_real);
     required = wcslen(src) - vfs_nthome_modern_len - shift + redir_len + 1;
 
     if (dest != NULL) {
@@ -422,7 +406,7 @@ static HRESULT vfs_path_hook_nthome_modern(
             return HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
         }
 
-        wcscpy_s(dest, *count, vfs_nthome_modern_real);
+        wcscpy_s(dest, *count, vfs_nthome_real);
         wcscpy_s(dest + redir_len, *count - redir_len, src + vfs_nthome_modern_len + shift);
     }
 
