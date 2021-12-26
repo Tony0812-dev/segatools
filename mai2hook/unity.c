@@ -23,7 +23,7 @@ static const struct hook_symbol unity_kernel32_syms[] = {
 };
 
 static const wchar_t *target_modules[] = {
-    L"mono.dll",
+    L"mono-2.0-bdwgc.dll",
     L"cri_ware_unity.dll",
 };
 static const size_t target_modules_len = _countof(target_modules);
