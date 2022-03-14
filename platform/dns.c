@@ -64,6 +64,37 @@ HRESULT dns_platform_hook_init(const struct dns_config *cfg)
         return hr;
     }
 
+    hr = dns_hook_push(L"op.auth.sys-all.net", cfg->aimedb);
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    hr = dns_hook_push(L"at.auth.sys-all.net", cfg->aimedb);
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    hr = dns_hook_push(L"at.sys-all.net", cfg->aimedb);
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    hr = dns_hook_push(L"sdhd.amlog.sys-all.net", cfg->aimedb);
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    hr = dns_hook_push(L"sdhd.d-amlog.sys-all.net", cfg->aimedb);
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+
     // if your ISP resolves bad domains, it will kill the network. These 2
     // *cannot* resolve
 
