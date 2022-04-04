@@ -9,6 +9,7 @@
 struct aime_config {
     struct aime_dll_config dll;
     bool enable;
+    bool high_baudrate;
 };
 
 HRESULT sg_reader_hook_init(

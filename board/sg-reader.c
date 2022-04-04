@@ -71,6 +71,11 @@ HRESULT sg_reader_hook_init(
     InitializeCriticalSection(&sg_reader_lock);
 
     uart_init(&sg_reader_uart, port_no);
+
+    if (!cfg->high_baudrate) {
+        sg_reader_uart.baud.BaudRate = 38400;
+    }
+    
     sg_reader_uart.written.bytes = sg_reader_written_bytes;
     sg_reader_uart.written.nbytes = sizeof(sg_reader_written_bytes);
     sg_reader_uart.readable.bytes = sg_reader_readable_bytes;
