@@ -61,7 +61,8 @@ static DWORD CALLBACK chusan_pre_startup(void)
     chusan_hook_config_load(&chusan_hook_cfg, L".\\segatools.ini");
 
     /* Hook Win32 APIs */
-
+    
+    dvd_hook_init(&chusan_hook_cfg.dvd, chusan_hook_mod);
     gfx_hook_init(&chusan_hook_cfg.gfx, chusan_hook_mod);
     serial_hook_init();
 

@@ -4,6 +4,7 @@
 #include "board/config.h"
 
 #include "hooklib/config.h"
+#include "hooklib/dvd.h"
 #include "hooklib/gfx.h"
 
 #include "platform/config.h"
@@ -45,6 +46,7 @@ void chusan_hook_config_load(
 
     platform_config_load(&cfg->platform, filename);
     aime_config_load(&cfg->aime, filename);
+    dvd_config_load(&cfg->dvd, filename);
     io4_config_load(&cfg->io4, filename);
     gfx_config_load(&cfg->gfx, filename);
     chuni_dll_config_load(&cfg->dll, filename);
