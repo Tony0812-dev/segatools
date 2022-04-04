@@ -11,6 +11,24 @@
 
 #include "chusanhook/config.h"
 
+// Check windows
+#if _WIN32 || _WIN64
+   #if _WIN64
+     #define ENV64BIT
+  #else
+    #define ENV32BIT
+  #endif
+#endif
+
+// Check GCC
+#if __GNUC__
+  #if __x86_64__ || __ppc64__
+    #define ENV64BIT
+  #else
+    #define ENV32BIT
+  #endif
+#endif
+
 void chuni_dll_config_load(
         struct chuni_dll_config *cfg,
         const wchar_t *filename)
@@ -18,13 +36,30 @@ void chuni_dll_config_load(
     assert(cfg != NULL);
     assert(filename != NULL);
 
-    GetPrivateProfileStringW(
-            L"chuniio",
-            L"path",
-            L"",
-            cfg->path,
-            _countof(cfg->path),
-            filename);
+    // Workaround for x64/x86 external IO dlls
+    // path32 for 32bit, path64 for 64bit
+    // for else.. is that possible? idk
+
+    #if defined(ENV32BIT)
+        GetPrivateProfileStringW(
+                L"chuniio",
+                L"path32",
+                L"",
+                cfg->path,
+                _countof(cfg->path),
+                filename);
+    #elif defined(ENV64BIT)
+        GetPrivateProfileStringW(
+                L"chuniio",
+                L"path64",
+                L"",
+                cfg->path,
+                _countof(cfg->path),
+                filename);
+    #else
+        #error "Unknown environment"
+    #endif
+    
 }
 
 void slider_config_load(struct slider_config *cfg, const wchar_t *filename)
