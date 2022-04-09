@@ -9,6 +9,7 @@
 #include "chunihook/config.h"
 #include "chunihook/jvs.h"
 #include "chunihook/slider.h"
+#include "chunihook/led1509306.h"
 
 #include "chuniio/chuniio.h"
 
@@ -93,6 +94,12 @@ static DWORD CALLBACK chuni_pre_startup(void)
         goto fail;
     }
 
+    hr = led1509306_hook_init(&chuni_hook_cfg.led1509306);
+
+    if (FAILED(hr)) {
+        goto fail;
+    }
+
     hr = sg_reader_hook_init(&chuni_hook_cfg.aime, 12, chuni_hook_mod);
 
     if (FAILED(hr)) {
@@ -128,6 +135,6 @@ BOOL WINAPI DllMain(HMODULE mod, DWORD cause, void *ctx)
     if (!SUCCEEDED(hr)) {
         dprintf("Failed to hijack process startup: %x\n", (int) hr);
     }
-
+    
     return SUCCEEDED(hr);
 }

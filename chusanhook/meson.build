@@ -27,5 +27,7 @@ shared_library(
         'io4.h',
         'slider.c',
         'slider.h',
+        'led1509306.c',
+        'led1509306.h',
     ],
 )
