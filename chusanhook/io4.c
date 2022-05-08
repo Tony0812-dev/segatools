@@ -61,6 +61,7 @@ HRESULT chusan_io4_hook_init(const struct io4_config* cfg)
 
 static HRESULT chusan_io4_poll(void* ctx, struct io4_state* state)
 {
+    const struct chunithm_jvs_ir_mask *masks;
     uint8_t opbtn;
     uint8_t beams;
     size_t i;
@@ -71,6 +72,14 @@ static HRESULT chusan_io4_poll(void* ctx, struct io4_state* state)
     beams = 0;
 
     chuni_dll.jvs_poll(&opbtn, &beams);
+
+    if (chuni_dll.api_version >= 0x0101) {
+        // Use correct mapping
+        masks = chunithm_jvs_ir_masks;
+    } else {
+        // Use backwards-compatible incorrect mapping
+        masks = chunithm_jvs_ir_masks_v1;
+    }
 
     if (opbtn & 0x01) {
         state->buttons[0] |= IO4_BUTTON_TEST;
@@ -83,8 +92,8 @@ static HRESULT chusan_io4_poll(void* ctx, struct io4_state* state)
     for (i = 0; i < 6; i++) {
         /* Beam "press" is active-low hence the ~ */
         if (~beams & (1 << i)) {
-            state->buttons[0] |= chunithm_jvs_ir_masks[i].p1;
-            state->buttons[1] |= chunithm_jvs_ir_masks[i].p2;
+            state->buttons[0] |= masks[i].p1;
+            state->buttons[1] |= masks[i].p2;
         }
     }
 
