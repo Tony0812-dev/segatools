@@ -110,12 +110,6 @@ static DWORD CALLBACK chusan_pre_startup(void)
         goto fail;
     }
 
-    hr = vfd_hook_init(2);
-
-    if (FAILED(hr)) {
-        goto fail;
-    }
-
     /* Initialize debug helpers */
 
     spike_hook_init(L".\\segatools.ini");
