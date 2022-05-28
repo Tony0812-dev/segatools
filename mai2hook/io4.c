@@ -65,6 +65,10 @@ static HRESULT mai2_io4_poll(void *ctx, struct io4_state *state)
         state->buttons[0] |= IO4_BUTTON_SERVICE;
     }
 
+    if (opbtn & MAI2_IO_OPBTN_COIN) {
+        state->chutes[0] |= 1 << 8;
+    }
+
     // Buttons around screen are active-low, select button is active-high
 
     // Player 1

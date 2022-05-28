@@ -54,12 +54,16 @@ void chuni_io_jvs_poll(uint8_t *opbtn, uint8_t *beams)
 {
     size_t i;
 
-    if (GetAsyncKeyState(chuni_io_cfg.vk_test)) {
+    if (GetAsyncKeyState(chuni_io_cfg.vk_test) & 0x8000) {
         *opbtn |= 0x01; /* Test */
     }
 
-    if (GetAsyncKeyState(chuni_io_cfg.vk_service)) {
+    if (GetAsyncKeyState(chuni_io_cfg.vk_service) & 0x8000) {
         *opbtn |= 0x02; /* Service */
+    }
+
+    if (GetAsyncKeyState(chuni_io_cfg.vk_coin) & 0x8000) {
+        *opbtn |= 0x04; /* Coin */
     }
 
     if (chuni_io_cfg.vk_ir_emu) {

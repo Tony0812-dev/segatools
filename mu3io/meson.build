@@ -10,5 +10,7 @@ mu3io_lib = static_library(
     sources : [
         'mu3io.c',
         'mu3io.h',
+        'config.c',
+        'config.h',
     ],
 )

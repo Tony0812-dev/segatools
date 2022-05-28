@@ -7,6 +7,7 @@
 enum {
     MAI2_IO_OPBTN_TEST = 0x01,
     MAI2_IO_OPBTN_SERVICE = 0x02,
+    MAI2_IO_OPBTN_COIN = 0x04,
 };
 
 enum {

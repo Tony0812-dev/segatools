@@ -33,6 +33,7 @@ void chuni_io_config_load(
     assert(cfg != NULL);
     assert(filename != NULL);
 
+    // Technically it's io4 but leave this for compatibility with old configs.
     cfg->vk_test = GetPrivateProfileIntW(L"io3", L"test", '1', filename);
     cfg->vk_service = GetPrivateProfileIntW(L"io3", L"service", '2', filename);
     cfg->vk_coin = GetPrivateProfileIntW(L"io3", L"coin", '3', filename);

@@ -5,12 +5,14 @@
 #include <stdint.h>
 
 #include "mu3io/mu3io.h"
+#include "mu3io/config.h"
 
 static uint8_t mu3_opbtn;
 static uint8_t mu3_left_btn;
 static uint8_t mu3_right_btn;
 static int16_t mu3_lever_pos;
 static int16_t mu3_lever_xpos;
+static struct mu3_io_config mu3_io_cfg;
 
 uint16_t mu3_io_get_api_version(void)
 {
@@ -19,6 +21,7 @@ uint16_t mu3_io_get_api_version(void)
 
 HRESULT mu3_io_init(void)
 {
+    mu3_io_config_load(&mu3_io_cfg, L".\\segatools.ini");
     return S_OK;
 }
 
@@ -33,12 +36,16 @@ HRESULT mu3_io_poll(void)
     mu3_left_btn = 0;
     mu3_right_btn = 0;
 
-    if (GetAsyncKeyState('1') & 0x8000) {
+    if (GetAsyncKeyState(mu3_io_cfg.vk_test) & 0x8000) {
         mu3_opbtn |= MU3_IO_OPBTN_TEST;
     }
 
-    if (GetAsyncKeyState('2') & 0x8000) {
+    if (GetAsyncKeyState(mu3_io_cfg.vk_service) & 0x8000) {
         mu3_opbtn |= MU3_IO_OPBTN_SERVICE;
+    }
+
+    if (GetAsyncKeyState(mu3_io_cfg.vk_coin) & 0x8000) {
+        mu3_opbtn |= MU3_IO_OPBTN_COIN;
     }
 
     memset(&xi, 0, sizeof(xi));

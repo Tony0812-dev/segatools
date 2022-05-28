@@ -69,6 +69,10 @@ static HRESULT mu3_io4_poll(void *ctx, struct io4_state *state)
         state->buttons[0] |= IO4_BUTTON_SERVICE;
     }
 
+    if (opbtn & MU3_IO_OPBTN_COIN) {
+        state->chutes[0] |= 1 << 8;
+    }
+
     if (left & MU3_IO_GAMEBTN_1) {
         state->buttons[0] |= 1 << 0;
     }

@@ -29,12 +29,16 @@ HRESULT mai2_io_poll(void)
     mai2_player1_btn = 0;
     mai2_player2_btn = 0;
 
-    if (GetAsyncKeyState(mai2_io_cfg.vk_test)) {
+    if (GetAsyncKeyState(mai2_io_cfg.vk_test) & 0x8000) {
         mai2_opbtn |= MAI2_IO_OPBTN_TEST;
     }
 
-    if (GetAsyncKeyState(mai2_io_cfg.vk_service)) {
+    if (GetAsyncKeyState(mai2_io_cfg.vk_service) & 0x8000) {
         mai2_opbtn |= MAI2_IO_OPBTN_SERVICE;
+    }
+
+    if (GetAsyncKeyState(mai2_io_cfg.vk_coin) & 0x8000) {
+        mai2_opbtn |= MAI2_IO_OPBTN_COIN;
     }
 
     //Player 1

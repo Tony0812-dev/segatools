@@ -89,6 +89,10 @@ static HRESULT chusan_io4_poll(void* ctx, struct io4_state* state)
         state->buttons[0] |= IO4_BUTTON_SERVICE;
     }
 
+    if (opbtn & 0x04) {
+        state->chutes[0] |= 1 << 8;
+    }
+
     for (i = 0; i < 6; i++) {
         /* Beam "press" is active-low hence the ~ */
         if (~beams & (1 << i)) {

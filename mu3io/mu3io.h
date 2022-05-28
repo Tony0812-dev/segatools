@@ -7,6 +7,7 @@
 enum {
     MU3_IO_OPBTN_TEST = 0x01,
     MU3_IO_OPBTN_SERVICE = 0x02,
+    MU3_IO_OPBTN_COIN = 0x04,
 };
 
 enum {
