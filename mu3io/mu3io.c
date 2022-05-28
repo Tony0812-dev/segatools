@@ -13,6 +13,7 @@ static uint8_t mu3_right_btn;
 static int16_t mu3_lever_pos;
 static int16_t mu3_lever_xpos;
 static struct mu3_io_config mu3_io_cfg;
+static bool mu3_io_coin;
 
 uint16_t mu3_io_get_api_version(void)
 {
@@ -45,7 +46,12 @@ HRESULT mu3_io_poll(void)
     }
 
     if (GetAsyncKeyState(mu3_io_cfg.vk_coin) & 0x8000) {
-        mu3_opbtn |= MU3_IO_OPBTN_COIN;
+        if (!mu3_io_coin) {
+            mu3_io_coin = true;
+            mu3_opbtn |= MU3_IO_OPBTN_COIN;
+        }
+    } else {
+        mu3_io_coin = false;
     }
 
     memset(&xi, 0, sizeof(xi));

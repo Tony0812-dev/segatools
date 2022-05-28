@@ -63,7 +63,12 @@ void chuni_io_jvs_poll(uint8_t *opbtn, uint8_t *beams)
     }
 
     if (GetAsyncKeyState(chuni_io_cfg.vk_coin) & 0x8000) {
-        *opbtn |= 0x04; /* Coin */
+        if (!chuni_io_coin) {
+            chuni_io_coin = true;
+            *opbtn |= 0x04; /* Coin */
+        }
+    } else {
+        chuni_io_coin = false;
     }
 
     if (chuni_io_cfg.vk_ir_emu) {

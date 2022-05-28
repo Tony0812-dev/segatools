@@ -10,6 +10,7 @@ static uint8_t mai2_opbtn;
 static uint16_t mai2_player1_btn;
 static uint16_t mai2_player2_btn;
 static struct mai2_io_config mai2_io_cfg;
+static bool mai2_io_coin;
 
 uint16_t mai2_io_get_api_version(void)
 {
@@ -38,7 +39,12 @@ HRESULT mai2_io_poll(void)
     }
 
     if (GetAsyncKeyState(mai2_io_cfg.vk_coin) & 0x8000) {
-        mai2_opbtn |= MAI2_IO_OPBTN_COIN;
+        if (!mai2_io_coin) {
+            mai2_io_coin = true;
+            mai2_opbtn |= MAI2_IO_OPBTN_COIN;
+        }
+    } else {
+        mai2_io_coin = false;
     }
 
     //Player 1
