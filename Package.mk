@@ -17,13 +17,17 @@ $(BUILD_DIR_ZIP)/chusan.zip:
 	$(V)echo ... $@
 	$(V)mkdir -p $(BUILD_DIR_ZIP)/chusan
 	$(V)mkdir -p $(BUILD_DIR_ZIP)/chusan/DEVICE
-	$(V)cp $(BUILD_DIR_32)/subprojects/capnhook/inject/inject_x86.exe \
-		$(BUILD_DIR_32)/chusanhook/chusanhook_x86.dll \
-		$(BUILD_DIR_64)/subprojects/capnhook/inject/inject_x64.exe \
-		$(BUILD_DIR_64)/chusanhook/chusanhook_x64.dll \
-		$(DIST_DIR)/chusan/segatools.ini \
+	$(V)cp $(DIST_DIR)/chusan/segatools.ini \
 		$(DIST_DIR)/chusan/start.bat \
 		$(BUILD_DIR_ZIP)/chusan
+	$(V)cp $(BUILD_DIR_32)/chusanhook/chusanhook.dll \
+		$(BUILD_DIR_ZIP)/chusan/chusanhook_x86.dll
+	$(V)cp $(BUILD_DIR_64)/chusanhook/chusanhook.dll \
+		$(BUILD_DIR_ZIP)/chusan/chusanhook_x64.dll
+	$(V)cp $(BUILD_DIR_32)/subprojects/capnhook/inject/inject.exe \
+		$(BUILD_DIR_ZIP)/chusan/inject_x86.exe
+	$(V)cp $(BUILD_DIR_64)/subprojects/capnhook/inject/inject.exe \
+		$(BUILD_DIR_ZIP)/chusan/inject_x64.exe
 	$(V)cp pki/billing.pub \
 		pki/ca.crt \
     	$(BUILD_DIR_ZIP)/chusan/DEVICE
@@ -60,6 +64,21 @@ $(BUILD_DIR_ZIP)/mai2.zip:
 	$(V)strip $(BUILD_DIR_ZIP)/mai2/*.{exe,dll}
 	$(V)cd $(BUILD_DIR_ZIP)/mai2 ; zip -r ../mai2.zip *
 
+$(BUILD_DIR_ZIP)/mu3.zip:
+	$(V)echo ... $@
+	$(V)mkdir -p $(BUILD_DIR_ZIP)/mu3
+	$(V)mkdir -p $(BUILD_DIR_ZIP)/mu3/DEVICE
+	$(V)cp $(BUILD_DIR_64)/subprojects/capnhook/inject/inject.exe \
+		$(BUILD_DIR_64)/mu3hook/mu3hook.dll \
+		$(DIST_DIR)/mu3/segatools.ini \
+		$(DIST_DIR)/mu3/start.bat \
+		$(BUILD_DIR_ZIP)/mu3
+	$(V)cp pki/billing.pub \
+		pki/ca.crt \
+    	$(BUILD_DIR_ZIP)/mu3/DEVICE
+	$(V)strip $(BUILD_DIR_ZIP)/mu3/*.{exe,dll}
+	$(V)cd $(BUILD_DIR_ZIP)/mu3 ; zip -r ../mu3.zip *
+
 $(BUILD_DIR_ZIP)/doc.zip: \
 		$(DOC_DIR)/config \
 		$(DOC_DIR)/chunihook.md \
@@ -74,6 +93,7 @@ $(BUILD_DIR_ZIP)/segatools.zip: \
 		$(BUILD_DIR_ZIP)/doc.zip \
 		$(BUILD_DIR_ZIP)/idz.zip \
         $(BUILD_DIR_ZIP)/mai2.zip \
+		$(BUILD_DIR_ZIP)/mu3.zip \
 		CHANGELOG.md \
 		README.md \
 
