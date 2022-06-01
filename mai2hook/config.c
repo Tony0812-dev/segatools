@@ -5,7 +5,6 @@
 
 #include "hooklib/config.h"
 #include "hooklib/dvd.h"
-#include "hooklib/gfx.h"
 
 #include "mai2hook/config.h"
 
@@ -38,6 +37,5 @@ void mai2_hook_config_load(
     aime_config_load(&cfg->aime, filename);
     dvd_config_load(&cfg->dvd, filename);
     io4_config_load(&cfg->io4, filename);
-    gfx_config_load(&cfg->gfx, filename);
     mai2_dll_config_load(&cfg->dll, filename);
 }

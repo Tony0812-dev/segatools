@@ -5,7 +5,6 @@
 #include "board/config.h"
 
 #include "hooklib/dvd.h"
-#include "hooklib/gfx.h"
 
 #include "mu3hook/mu3-dll.h"
 
@@ -16,7 +15,6 @@ struct mu3_hook_config {
     struct aime_config aime;
     struct dvd_config dvd;
     struct io4_config io4;
-    struct gfx_config gfx;
     struct mu3_dll_config dll;
 };
 
