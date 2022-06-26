@@ -9,8 +9,8 @@ $(BUILD_DIR_ZIP)/chuni.zip:
 		$(BUILD_DIR_ZIP)/chuni
 	$(V)cp pki/billing.pub \
 		pki/ca.crt \
-    	$(BUILD_DIR_ZIP)/chuni/DEVICE
-	$(V)strip $(BUILD_DIR_ZIP)/chuni/*.{exe,dll}
+		$(BUILD_DIR_ZIP)/chuni/DEVICE
+	for x in exe dll; do strip $(BUILD_DIR_ZIP)/chuni/*.$$x; done
 	$(V)cd $(BUILD_DIR_ZIP)/chuni ; zip -r ../chuni.zip *
 	
 $(BUILD_DIR_ZIP)/chusan.zip:
@@ -30,8 +30,8 @@ $(BUILD_DIR_ZIP)/chusan.zip:
 		$(BUILD_DIR_ZIP)/chusan/inject_x64.exe
 	$(V)cp pki/billing.pub \
 		pki/ca.crt \
-    	$(BUILD_DIR_ZIP)/chusan/DEVICE
-	$(V)strip $(BUILD_DIR_ZIP)/chusan/*.{exe,dll}
+		$(BUILD_DIR_ZIP)/chusan/DEVICE
+	for x in exe dll; do strip $(BUILD_DIR_ZIP)/chusan/*.$$x; done
 	$(V)cd $(BUILD_DIR_ZIP)/chusan ; zip -r ../chusan.zip *
 
 $(BUILD_DIR_ZIP)/idz.zip:
@@ -42,11 +42,11 @@ $(BUILD_DIR_ZIP)/idz.zip:
 		$(BUILD_DIR_64)/idzhook/idzhook.dll \
 		$(DIST_DIR)/idz/segatools.ini \
 		$(DIST_DIR)/idz/start.bat \
-    	$(BUILD_DIR_ZIP)/idz
+		$(BUILD_DIR_ZIP)/idz
 	$(V)cp pki/billing.pub \
 		pki/ca.crt \
-    	$(BUILD_DIR_ZIP)/idz/DEVICE
-	$(V)strip $(BUILD_DIR_ZIP)/idz/*.{exe,dll}
+		$(BUILD_DIR_ZIP)/idz/DEVICE
+	for x in exe dll; do strip $(BUILD_DIR_ZIP)/idz/*.$$x; done
 	$(V)cd $(BUILD_DIR_ZIP)/idz ; zip -r ../idz.zip *
 
 $(BUILD_DIR_ZIP)/mai2.zip:
@@ -60,8 +60,8 @@ $(BUILD_DIR_ZIP)/mai2.zip:
 		$(BUILD_DIR_ZIP)/mai2
 	$(V)cp pki/billing.pub \
 		pki/ca.crt \
-    	$(BUILD_DIR_ZIP)/mai2/DEVICE
-	$(V)strip $(BUILD_DIR_ZIP)/mai2/*.{exe,dll}
+		$(BUILD_DIR_ZIP)/mai2/DEVICE
+	for x in exe dll; do strip $(BUILD_DIR_ZIP)/mai2/*.$$x; done
 	$(V)cd $(BUILD_DIR_ZIP)/mai2 ; zip -r ../mai2.zip *
 
 $(BUILD_DIR_ZIP)/mu3.zip:
@@ -75,8 +75,8 @@ $(BUILD_DIR_ZIP)/mu3.zip:
 		$(BUILD_DIR_ZIP)/mu3
 	$(V)cp pki/billing.pub \
 		pki/ca.crt \
-    	$(BUILD_DIR_ZIP)/mu3/DEVICE
-	$(V)strip $(BUILD_DIR_ZIP)/mu3/*.{exe,dll}
+		$(BUILD_DIR_ZIP)/mu3/DEVICE
+	for x in exe dll; do strip $(BUILD_DIR_ZIP)/mu3/*.$$x; done
 	$(V)cd $(BUILD_DIR_ZIP)/mu3 ; zip -r ../mu3.zip *
 
 $(BUILD_DIR_ZIP)/doc.zip: \
@@ -92,7 +92,7 @@ $(BUILD_DIR_ZIP)/segatools.zip: \
 		$(BUILD_DIR_ZIP)/chusan.zip \
 		$(BUILD_DIR_ZIP)/doc.zip \
 		$(BUILD_DIR_ZIP)/idz.zip \
-        $(BUILD_DIR_ZIP)/mai2.zip \
+		$(BUILD_DIR_ZIP)/mai2.zip \
 		$(BUILD_DIR_ZIP)/mu3.zip \
 		CHANGELOG.md \
 		README.md \
