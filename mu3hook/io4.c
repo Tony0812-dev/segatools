@@ -11,6 +11,7 @@
 #include "util/dprintf.h"
 
 static HRESULT mu3_io4_poll(void *ctx, struct io4_state *state);
+static uint16_t coins;
 
 static const struct io4_ops mu3_io4_ops = {
     .poll = mu3_io4_poll,
@@ -70,8 +71,9 @@ static HRESULT mu3_io4_poll(void *ctx, struct io4_state *state)
     }
 
     if (opbtn & MU3_IO_OPBTN_COIN) {
-        state->chutes[0] |= 1 << 8;
+        coins++;
     }
+    state->chutes[0] = coins << 8;
 
     if (left & MU3_IO_GAMEBTN_1) {
         state->buttons[0] |= 1 << 0;

@@ -34,6 +34,7 @@ static const struct chunithm_jvs_ir_mask chunithm_jvs_ir_masks[] = {
 };
 
 static HRESULT chusan_io4_poll(void* ctx, struct io4_state* state);
+static uint16_t coins;
 
 static const struct io4_ops chusan_io4_ops = {
     .poll = chusan_io4_poll,
@@ -90,8 +91,9 @@ static HRESULT chusan_io4_poll(void* ctx, struct io4_state* state)
     }
 
     if (opbtn & 0x04) {
-        state->chutes[0] |= 1 << 8;
+        coins++;
     }
+    state->chutes[0] = coins << 8;
 
     for (i = 0; i < 6; i++) {
         /* Beam "press" is active-low hence the ~ */

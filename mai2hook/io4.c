@@ -11,6 +11,7 @@
 #include "util/dprintf.h"
 
 static HRESULT mai2_io4_poll(void *ctx, struct io4_state *state);
+static uint16_t coins;
 
 static const struct io4_ops mai2_io4_ops = {
     .poll = mai2_io4_poll,
@@ -66,8 +67,9 @@ static HRESULT mai2_io4_poll(void *ctx, struct io4_state *state)
     }
 
     if (opbtn & MAI2_IO_OPBTN_COIN) {
-        state->chutes[0] |= 1 << 8;
+        coins++;
     }
+    state->chutes[0] = coins << 8;
 
     // Buttons around screen are active-low, select button is active-high
 
