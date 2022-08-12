@@ -81,6 +81,7 @@ void led1509306_config_load(struct led1509306_config *cfg, const wchar_t *filena
     memset(cfg->chip_number, ' ', sizeof(cfg->chip_number));
     
     cfg->enable = GetPrivateProfileIntW(L"ledstrip", L"enable", 1, filename);
+    cfg->cvt_port = GetPrivateProfileIntW(L"ledstrip", L"cvt_port", 0, filename);
     cfg->fw_ver = GetPrivateProfileIntW(L"ledstrip", L"fw_ver", 0x90, filename);
     cfg->fw_sum = GetPrivateProfileIntW(L"ledstrip", L"fw_sum", 0xadf7, filename);
     

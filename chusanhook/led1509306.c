@@ -64,13 +64,25 @@ HRESULT led1509306_hook_init(const struct led1509306_config *cfg)
     led1509306_fw_ver = cfg->fw_ver;
     led1509306_fw_sum = cfg->fw_sum;
     
+    int com_ports[2];
+
+    if (!cfg->cvt_port) {
+        // SP mode: COM20, COM21
+        com_ports[0] = 20;
+        com_ports[1] = 21;
+    } else {
+        // CVT mode: COM3, COM23
+        com_ports[0] = 2;
+        com_ports[1] = 3;
+    }
+
     for (int i = 0; i < led1509306_nboards; i++)
     {
         _led1509306_per_board_vars *v = &led1509306_per_board_vars[i];
         
         InitializeCriticalSection(&v->lock);
 
-        uart_init(&v->boarduart, 20 + i);
+        uart_init(&v->boarduart, com_ports[i]);
         v->boarduart.written.bytes = v->written_bytes;
         v->boarduart.written.nbytes = sizeof(v->written_bytes);
         v->boarduart.readable.bytes = v->readable_bytes;
