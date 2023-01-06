@@ -1,0 +1,32 @@
+shared_library(
+    'cmhook',
+    name_prefix : '',
+    include_directories : inc,
+    implicit_include_directories : false,
+    vs_module_defs : 'cmhook.def',
+    c_pch : '../precompiled.h',
+    dependencies : [
+        capnhook.get_variable('hook_dep'),
+        capnhook.get_variable('hooklib_dep'),
+        xinput_lib,
+    ],
+    link_with : [
+        aimeio_lib,
+        board_lib,
+        hooklib_lib,
+        cmio_lib,
+        platform_lib,
+        util_lib,
+    ],
+    sources : [
+        'config.c',
+        'config.h',
+        'dllmain.c',
+        'io4.c',
+        'io4.h',
+        'cm-dll.c',
+        'cm-dll.h',
+        'unity.h',
+        'unity.c',
+    ],
+)
