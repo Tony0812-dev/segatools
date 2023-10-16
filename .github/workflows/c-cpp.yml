@@ -12,5 +12,5 @@ jobs:
     - name: configure
       run: sudo apt -y install meson clang gcc-mingw-w64-x86-64-win32
     - name: make
-      run: make
+      run: make build
 
